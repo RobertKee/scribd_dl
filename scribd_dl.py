@@ -43,15 +43,15 @@ def click_on_el(el: WebElement):
 
 try:
     print_if_verbose('opening website...')
-    driver.get("https://scribd.com")
-    login_btn_el = WebDriverWait(driver, WAITING_TIMEOUT).until(
-        EC.element_to_be_clickable((By.CSS_SELECTOR, 'a.header_login_btn'))
-    )
+    driver.get("https://scribd.com/login")
+    # login_btn_el = WebDriverWait(driver, WAITING_TIMEOUT).until(
+        # EC.element_to_be_clickable((By.CSS_SELECTOR, 'a.header_login_btn'))
+    # )
     print_if_verbose('logging in...')
-    click_on_el(login_btn_el)
+    # click_on_el(login_btn_el)
     login_email_btn_el = WebDriverWait(driver, WAITING_TIMEOUT).until(
         EC.element_to_be_clickable(
-            (By.CSS_SELECTOR, 'a[data-e2e=email-button]'))
+            (By.CSS_SELECTOR, 'a[data-e2e="email-button"]'))
     )
     click_on_el(login_email_btn_el)
     driver.find_element(By.CSS_SELECTOR, '.sign_in .login_or_email.email input').send_keys(
@@ -97,10 +97,13 @@ try:
         driver.get(book_url)
         listen_btn_el = WebDriverWait(driver, WAITING_TIMEOUT).until(
             EC.presence_of_element_located(
-                (By.CSS_SELECTOR, 'div[data-e2e=primary-actions]>a[data-e2e=listen-button]'))
+                (By.CSS_SELECTOR, 'a[data-e2e="listen-button"]'))
         )
         listen_btn_link = listen_btn_el.get_attribute('href')
-        book_name = driver.find_element(By.CSS_SELECTOR, 'h1[data-e2e=desktop-content-title]').text
+        print("found listen_btn_link")
+        book_name = driver.find_element(By.CSS_SELECTOR, 'h1[data-e2e="desktop-content-title"]').text
+        print(f"found book_name {book_name}")
+
         driver.get(listen_btn_link)
         chapters_menu_el = WebDriverWait(driver, WAITING_TIMEOUT).until(
             EC.element_to_be_clickable(
